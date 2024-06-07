@@ -12,7 +12,7 @@ namespace Grill_Thrills
 		[SerializeField] private float cookTime;
 		[SerializeField] private float cookTimeMultiplier;
 		[SerializeField] private float idealCookTime;
-		[SerializeField] private float timeOnGrill;
+		private float timeOnGrill;
 		private bool isOnGrill = false;
 
 		[Space()]
