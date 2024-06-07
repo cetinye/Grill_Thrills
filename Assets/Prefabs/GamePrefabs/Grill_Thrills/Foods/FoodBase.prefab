@@ -54,9 +54,19 @@ MonoBehaviour:
   sliderFillImg: {fileID: 2228943887643055512}
   ideallyCookedColor: {r: 1, g: 1, b: 0, a: 1}
   overCookedColor: {r: 0.6792453, g: 0, b: 0, a: 1}
+  meshRenderer: {fileID: 2397281372829079567}
   meatMat: {fileID: 0}
   fatMat: {fileID: 0}
   boneMat: {fileID: 0}
+  meatMatIndex: 0
+  fatMatIndex: 0
+  boneMatIndex: 0
+  m_cookedColor: {r: 0, g: 0, b: 0, a: 1}
+  m_overcookedColor: {r: 0, g: 0, b: 0, a: 1}
+  f_cookedColor: {r: 0.6039216, g: 0.36862746, b: 0.30588236, a: 1}
+  f_overcookedColor: {r: 0.6039216, g: 0.36862746, b: 0.30588236, a: 1}
+  b_cookedColor: {r: 0, g: 0, b: 0, a: 1}
+  b_overcookedColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!54 &7492152385737261868
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -136,7 +146,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2467350130189884917}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -154,7 +164,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
@@ -457,7 +467,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -553,6 +563,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3987122161780853921}
   m_SourcePrefab: {fileID: 100100000, guid: 2532d473fa4f9c7448045a788b95f8d6, type: 3}
+--- !u!23 &2397281372829079567 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 2532d473fa4f9c7448045a788b95f8d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3928633200968057995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3535315166063010656 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2532d473fa4f9c7448045a788b95f8d6,

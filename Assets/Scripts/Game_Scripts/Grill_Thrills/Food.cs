@@ -25,9 +25,47 @@ namespace Grill_Thrills
 
 		[Space()]
 		[Header("Materials")]
+		[SerializeField] private MeshRenderer meshRenderer;
+		[Space()]
 		[SerializeField] private Material meatMat;
 		[SerializeField] private Material fatMat;
 		[SerializeField] private Material boneMat;
+		[Space()]
+		[SerializeField] private int meatMatIndex;
+		[SerializeField] private int fatMatIndex;
+		[SerializeField] private int boneMatIndex;
+
+		[Space()]
+		[Header("Material Colors")]
+		[SerializeField] private Color m_cookedColor;
+		[SerializeField] private Color m_overcookedColor;
+		[Space()]
+		[SerializeField] private Color f_cookedColor;
+		[SerializeField] private Color f_overcookedColor;
+		[Space()]
+		[SerializeField] private Color b_cookedColor;
+		[SerializeField] private Color b_overcookedColor;
+
+		void Awake()
+		{
+			if (meatMat != null)
+			{
+				meatMat = Instantiate(meatMat);
+				meshRenderer.materials[meatMatIndex] = meatMat;
+			}
+
+			if (fatMat != null)
+			{
+				fatMat = Instantiate(fatMat);
+				meshRenderer.materials[fatMatIndex] = fatMat;
+			}
+
+			if (boneMat != null)
+			{
+				boneMat = Instantiate(boneMat);
+				meshRenderer.materials[boneMatIndex] = boneMat;
+			}
+		}
 
 		void Start()
 		{
@@ -40,7 +78,8 @@ namespace Grill_Thrills
 			{
 				timeOnGrill = 0f;
 				isOnGrill = true;
-				ColorFood();
+				ColorFoodSlider();
+				ColorFoodMaterials();
 			}
 		}
 
@@ -63,7 +102,7 @@ namespace Grill_Thrills
 			slider.value = timeOnGrill / (cookTime / cookTimeMultiplier);
 		}
 
-		private void ColorFood()
+		private void ColorFoodSlider()
 		{
 			if (!isColoringStarted)
 			{
@@ -72,9 +111,26 @@ namespace Grill_Thrills
 			}
 		}
 
+		private void ColorFoodMaterials()
+		{
+			if (meatMat != null)
+				FoodMaterialColorTween(meshRenderer.materials[meatMatIndex], m_cookedColor, idealCookTime).OnComplete(() => FoodMaterialColorTween(meshRenderer.materials[meatMatIndex], m_overcookedColor, cookTime - timeOnGrill)); ;
+
+			if (fatMat != null)
+				FoodMaterialColorTween(meshRenderer.materials[fatMatIndex], f_cookedColor, idealCookTime).OnComplete(() => FoodMaterialColorTween(meshRenderer.materials[fatMatIndex], f_overcookedColor, cookTime - timeOnGrill)); ;
+
+			if (boneMat != null)
+				FoodMaterialColorTween(meshRenderer.materials[boneMatIndex], b_cookedColor, idealCookTime).OnComplete(() => FoodMaterialColorTween(meshRenderer.materials[boneMatIndex], b_overcookedColor, cookTime - timeOnGrill)); ;
+		}
+
 		private Tween SliderColorTween(Color color, float time)
 		{
 			return sliderFillImg.DOColor(color, time).SetEase(Ease.Linear);
+		}
+
+		private Tween FoodMaterialColorTween(Material mat, Color color, float time)
+		{
+			return mat.DOColor(color, time).SetEase(Ease.Linear);
 		}
 	}
 }

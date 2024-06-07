@@ -8,6 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
+        type: 3}
+      propertyPath: meatMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c9359a89cb8b534e830a0f2d29adc4d, type: 2}
+    - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
+        type: 3}
+      propertyPath: meshRenderer
+      value: 
+      objectReference: {fileID: 7507996033483291170}
+    - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
+        type: 3}
+      propertyPath: m_cookedColor.g
+      value: 0.019607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
+        type: 3}
+      propertyPath: m_cookedColor.r
+      value: 0.32156864
+      objectReference: {fileID: 0}
     - target: {fileID: 1850961071056921833, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
       propertyPath: m_Name
@@ -16,17 +36,17 @@ PrefabInstance:
     - target: {fileID: 2454451925843632939, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.00992
       objectReference: {fileID: 0}
     - target: {fileID: 2454451925843632939, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.00625
       objectReference: {fileID: 0}
     - target: {fileID: 2454451925843632939, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.00735
       objectReference: {fileID: 0}
     - target: {fileID: 2454451925843632939, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
@@ -171,6 +191,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7632603633368042476}
   m_SourcePrefab: {fileID: 100100000, guid: 8b3aeb5406992004787ec7c92417ff09, type: 3}
+--- !u!23 &7507996033483291170 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 8b3aeb5406992004787ec7c92417ff09,
+    type: 3}
+  m_PrefabInstance: {fileID: 9218964356001343142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8300484776662375415 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8b3aeb5406992004787ec7c92417ff09,
