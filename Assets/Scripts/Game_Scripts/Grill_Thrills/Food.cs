@@ -16,6 +16,7 @@ namespace Grill_Thrills
 		private bool isOnGrill = false;
 		private Rigidbody rb;
 		private BoxCollider boxCollider;
+		private int slotIndex;
 
 		[Space()]
 		[Header("Cook Slider")]
@@ -115,12 +116,14 @@ namespace Grill_Thrills
 			{
 				Debug.LogWarning("IDEALLY COOKED " + gameObject.name);
 				ShowFeedback(correctSpr, 0.5f);
+				levelManager.Correct();
 				Invoke(nameof(DisappearFood), 0.5f);
 			}
 			else
 			{
 				Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
 				ShowFeedback(wrongSpr, 0.5f);
+				levelManager.Wrong();
 				Invoke(nameof(BurnFood), 0.5f);
 			}
 
@@ -169,19 +172,24 @@ namespace Grill_Thrills
 		private void BurnFood()
 		{
 			DisableCollision();
-			BurnFood(1f).OnComplete(() => Destroy(gameObject)); ;
+			BurnFood(1f).OnComplete(() => DestroyFood());
 		}
 
 		private void DisappearFood()
 		{
 			DisableCollision();
-			DisappearFood(1f).OnComplete(() => Destroy(gameObject));
+			DisappearFood(1f).OnComplete(() => DestroyFood());
 		}
 
 		private void DisableCollision()
 		{
 			boxCollider.enabled = false;
 			rb.useGravity = false;
+		}
+
+		public void SetSlotIndex(int index)
+		{
+			slotIndex = index;
 		}
 
 		private Tween SliderColorTween(Color color, float time)
@@ -210,6 +218,12 @@ namespace Grill_Thrills
 		{
 			renderer.transform.DOScale(0.0033f, time);
 			renderer.DOFade(1f, time).SetEase(Ease.InOutQuad);
+		}
+
+		private void DestroyFood()
+		{
+			levelManager.FreeSpawnPoint(slotIndex);
+			Destroy(gameObject);
 		}
 	}
 }

@@ -8,6 +8,7 @@ namespace Grill_Thrills
 	public class LevelManager : MonoBehaviour
 	{
 		public static LevelManager instance;
+		[SerializeField] private UIManager uiManager;
 
 		[Header("Camera")]
 		public Camera mainCamera;
@@ -21,7 +22,8 @@ namespace Grill_Thrills
 		[SerializeField] private Transform spawnParent;
 		[SerializeField] private List<Transform> spawnPoints = new List<Transform>();
 		[SerializeField] private List<Food> foodPrefabs = new List<Food>();
-		private List<Transform> usedSpawnPoints = new List<Transform>();
+		[SerializeField] private List<int> usedSpawnPointIndexes = new List<int>();
+		private int correctCount = 0, wrongCount = 0;
 
 		void Awake()
 		{
@@ -67,26 +69,31 @@ namespace Grill_Thrills
 			for (int i = 0; i < 1; i++)
 			{
 				int foodIndex = Random.Range(0, foodPrefabs.Count);
-				Food food = Instantiate(foodPrefabs[foodIndex], GetSpawnPoint().position, Quaternion.Euler(new Vector3(0f, 0f, 0f)), spawnParent);
+				int spawnPointIndex = GetSpawnPointIndex();
+				Food food = Instantiate(foodPrefabs[foodIndex], spawnPoints[spawnPointIndex].position, Quaternion.Euler(new Vector3(0f, 0f, 0f)), spawnParent);
 				food.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+				food.SetSlotIndex(spawnPointIndex);
 			}
 		}
 
-		private Transform GetSpawnPoint()
+		private int GetSpawnPointIndex()
 		{
 			int pointIndex;
-			Transform selectedPoint;
 
 			do
 			{
 				pointIndex = Random.Range(0, spawnPoints.Count);
-				selectedPoint = spawnPoints[pointIndex];
 
-			} while (usedSpawnPoints.Contains(selectedPoint));
+			} while (usedSpawnPointIndexes.Contains(pointIndex));
 
-			usedSpawnPoints.Add(selectedPoint);
+			usedSpawnPointIndexes.Add(pointIndex);
 
-			return selectedPoint;
+			return pointIndex;
+		}
+
+		public void FreeSpawnPoint(int pointIndex)
+		{
+			usedSpawnPointIndexes.Remove(pointIndex);
 		}
 
 		public BoxCollider GetGrillCollider()
@@ -94,9 +101,24 @@ namespace Grill_Thrills
 			return grillCollider;
 		}
 
+		public void Correct()
+		{
+			correctCount++;
+			uiManager.UpdateCorrectText(correctCount);
+		}
+
+		public void Wrong()
+		{
+			wrongCount++;
+			uiManager.UpdateWrongText(wrongCount);
+		}
+
 		private void Reset()
 		{
-			usedSpawnPoints.Clear();
+			usedSpawnPointIndexes.Clear();
+
+			correctCount = 0;
+			wrongCount = 0;
 		}
 
 		IEnumerator MoveCameraRoutine()
