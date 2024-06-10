@@ -56,7 +56,7 @@ namespace Grill_Thrills
 
 				case GameState.Playing:
 					Reset();
-					InvokeRepeating(nameof(SpawnFood), 1f, 3f);
+					InvokeRepeating(nameof(SpawnFood), 1f, 1f);
 					break;
 
 				default:
@@ -66,6 +66,10 @@ namespace Grill_Thrills
 
 		private void SpawnFood()
 		{
+			// if all slots used, dont spawn
+			if (usedSpawnPointIndexes.Count == spawnPoints.Count)
+				return;
+
 			for (int i = 0; i < 1; i++)
 			{
 				int foodIndex = Random.Range(0, foodPrefabs.Count);

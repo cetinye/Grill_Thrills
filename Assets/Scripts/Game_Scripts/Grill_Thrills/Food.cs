@@ -17,6 +17,7 @@ namespace Grill_Thrills
 		private Rigidbody rb;
 		private BoxCollider boxCollider;
 		private int slotIndex;
+		private bool isClickable = false;
 
 		[Space()]
 		[Header("Cook Slider")]
@@ -96,6 +97,7 @@ namespace Grill_Thrills
 			{
 				timeOnGrill = 0f;
 				isOnGrill = true;
+				isClickable = true;
 				ColorFoodSlider();
 				ColorFoodMaterials();
 			}
@@ -112,6 +114,10 @@ namespace Grill_Thrills
 
 		public void Tapped()
 		{
+			if (!isClickable) return;
+
+			isClickable = false;
+
 			if (isOnGrill && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f) > slider.value)
 			{
 				Debug.LogWarning("IDEALLY COOKED " + gameObject.name);
@@ -121,15 +127,20 @@ namespace Grill_Thrills
 			}
 			else
 			{
-				Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
-				ShowFeedback(wrongSpr, 0.5f);
-				levelManager.Wrong();
-				Invoke(nameof(BurnFood), 0.5f);
+				Wrong();
 			}
 
 			isOnGrill = false;
 			sliderColorTween.Kill();
 			foodColorTween.Kill();
+		}
+
+		private void Wrong()
+		{
+			Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
+			ShowFeedback(wrongSpr, 0.5f);
+			levelManager.Wrong();
+			Invoke(nameof(BurnFood), 0.5f);
 		}
 
 		private void GetRandomIdealCookRange()
@@ -143,8 +154,9 @@ namespace Grill_Thrills
 
 			if (slider.value >= 1)
 			{
+				isClickable = false;
 				isOnGrill = false;
-				Invoke(nameof(DisappearFood), 0.5f);
+				Wrong();
 			}
 		}
 

@@ -113,6 +113,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2764916503092790097, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
+        type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4560704099742577518, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -256,8 +261,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.022908092, y: 0.0062915515, z: 0.006972662}
-  m_Center: {x: 0.000055709388, y: -0.000095748925, z: -0.00002888136}
+  m_Size: {x: 0.022908088, y: 0.0062915524, z: 0.025675973}
+  m_Center: {x: 0.000055709294, y: -0.00009574879, z: 0.00041129978}
 --- !u!4 &3112971684356267731 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1298ba7312804634c889744084cffee1,
