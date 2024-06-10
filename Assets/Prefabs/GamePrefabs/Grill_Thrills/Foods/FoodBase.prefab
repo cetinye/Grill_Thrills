@@ -55,6 +55,10 @@ MonoBehaviour:
   ideallyCookedSliderFillImg: {fileID: 4937751900147812781}
   ideallyCookedColor: {r: 1, g: 1, b: 0, a: 1}
   overCookedColor: {r: 0.6792453, g: 0, b: 0, a: 1}
+  disappearParticle: {fileID: 5585721410720856309, guid: 961bf033d2b97674f96e084cd9093c9f,
+    type: 3}
+  burnParticle: {fileID: 6112434648215196668, guid: 6259cd9e1111bb449872d60baf41b112,
+    type: 3}
   meshRenderer: {fileID: 2397281372829079567}
   meatMat: {fileID: 0}
   fatMat: {fileID: 0}

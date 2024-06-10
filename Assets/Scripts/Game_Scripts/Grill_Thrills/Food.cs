@@ -14,6 +14,8 @@ namespace Grill_Thrills
 		[SerializeField] private float idealCookTime;
 		private float timeOnGrill;
 		private bool isOnGrill = false;
+		private Rigidbody rb;
+		private BoxCollider boxCollider;
 
 		[Space()]
 		[Header("Cook Slider")]
@@ -66,11 +68,16 @@ namespace Grill_Thrills
 				boneMat = Instantiate(boneMat);
 				meshRenderer.materials[boneMatIndex] = boneMat;
 			}
+
+			rb = GetComponent<Rigidbody>();
+			boxCollider = GetComponentInChildren<BoxCollider>();
 		}
 
 		void Start()
 		{
 			levelManager = LevelManager.instance;
+
+			GetRandomIdealCookRange();
 		}
 
 		void OnCollisionEnter(Collision other)
@@ -100,17 +107,30 @@ namespace Grill_Thrills
 			if (isOnGrill && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f) > slider.value)
 			{
 				Debug.LogWarning("IDEALLY COOKED " + gameObject.name);
+				Invoke(nameof(DisappearFood), 0.5f);
 			}
 			else
 			{
 				Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
+				Invoke(nameof(BurnFood), 0.5f);
 			}
 
+		}
+
+		private void GetRandomIdealCookRange()
+		{
+			ideallyCookedSliderFillImg.fillAmount = Random.Range(0.05f, 0.25f);
 		}
 
 		private void UpdateSlider()
 		{
 			slider.value = timeOnGrill / (cookTime / cookTimeMultiplier);
+
+			if (slider.value >= 1)
+			{
+				isOnGrill = false;
+				Invoke(nameof(DisappearFood), 0.5f);
+			}
 		}
 
 		private void ColorFoodSlider()
@@ -134,6 +154,24 @@ namespace Grill_Thrills
 				FoodMaterialColorTween(meshRenderer.materials[boneMatIndex], b_cookedColor, idealCookTime).OnComplete(() => FoodMaterialColorTween(meshRenderer.materials[boneMatIndex], b_overcookedColor, cookTime - timeOnGrill)); ;
 		}
 
+		private void BurnFood()
+		{
+			DisableCollision();
+			BurnFood(1f).OnComplete(() => Destroy(gameObject)); ;
+		}
+
+		private void DisappearFood()
+		{
+			DisableCollision();
+			DisappearFood(1f).OnComplete(() => Destroy(gameObject));
+		}
+
+		private void DisableCollision()
+		{
+			boxCollider.enabled = false;
+			rb.useGravity = false;
+		}
+
 		private Tween SliderColorTween(Color color, float time)
 		{
 			return sliderFillImg.DOColor(color, time).SetEase(Ease.Linear);
@@ -142,6 +180,16 @@ namespace Grill_Thrills
 		private Tween FoodMaterialColorTween(Material mat, Color color, float time)
 		{
 			return mat.DOColor(color, time).SetEase(Ease.Linear);
+		}
+
+		private Tween BurnFood(float time)
+		{
+			return transform.DOScale(0f, time).SetEase(Ease.InOutQuad);
+		}
+
+		private Tween DisappearFood(float time)
+		{
+			return transform.DOLocalMoveZ(0.05555f, time).SetEase(Ease.InOutQuad);
 		}
 	}
 }
