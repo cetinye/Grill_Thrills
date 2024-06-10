@@ -19,6 +19,7 @@ namespace Grill_Thrills
 		[Header("Cook Slider")]
 		[SerializeField] private Slider slider;
 		[SerializeField] private Image sliderFillImg;
+		[SerializeField] private Image ideallyCookedSliderFillImg;
 		[SerializeField] private Color ideallyCookedColor;
 		[SerializeField] private Color overCookedColor;
 		private bool isColoringStarted = false;
@@ -95,6 +96,16 @@ namespace Grill_Thrills
 		public void Tapped()
 		{
 			Debug.Log("Tapped " + gameObject.name);
+
+			if (isOnGrill && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f) > slider.value)
+			{
+				Debug.LogWarning("IDEALLY COOKED " + gameObject.name);
+			}
+			else
+			{
+				Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
+			}
+
 		}
 
 		private void UpdateSlider()

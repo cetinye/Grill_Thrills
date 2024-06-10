@@ -11,7 +11,7 @@ namespace Grill_Thrills
                 Ray rayCam = LevelManager.instance.mainCamera.ScreenPointToRay(Input.GetTouch(0).position);
                 RaycastHit hitCam;
 
-                if (Physics.Raycast(rayCam, out hitCam) && hitCam.collider.TryGetComponent<IFood>(out IFood _food))
+                if (Physics.Raycast(rayCam, out hitCam) && hitCam.collider.transform.parent.TryGetComponent<IFood>(out IFood _food))
                 {
                     _food.Tapped();
                 }
