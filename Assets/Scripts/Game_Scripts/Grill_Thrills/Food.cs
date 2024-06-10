@@ -27,6 +27,11 @@ namespace Grill_Thrills
 		private bool isColoringStarted = false;
 
 		[Space()]
+		[Header("Feedbacks")]
+		[SerializeField] private SpriteRenderer correctSpr;
+		[SerializeField] private SpriteRenderer wrongSpr;
+
+		[Space()]
 		[Header("Materials")]
 		[SerializeField] private MeshRenderer meshRenderer;
 		[Space()]
@@ -48,6 +53,10 @@ namespace Grill_Thrills
 		[Space()]
 		[SerializeField] private Color b_cookedColor;
 		[SerializeField] private Color b_overcookedColor;
+
+		[Space()]
+		[Header("Tweens")]
+		private Tween sliderColorTween, foodColorTween;
 
 		void Awake()
 		{
@@ -102,19 +111,22 @@ namespace Grill_Thrills
 
 		public void Tapped()
 		{
-			Debug.Log("Tapped " + gameObject.name);
-
 			if (isOnGrill && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f) > slider.value)
 			{
 				Debug.LogWarning("IDEALLY COOKED " + gameObject.name);
+				ShowFeedback(correctSpr, 0.5f);
 				Invoke(nameof(DisappearFood), 0.5f);
 			}
 			else
 			{
 				Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
+				ShowFeedback(wrongSpr, 0.5f);
 				Invoke(nameof(BurnFood), 0.5f);
 			}
 
+			isOnGrill = false;
+			sliderColorTween.Kill();
+			foodColorTween.Kill();
 		}
 
 		private void GetRandomIdealCookRange()
@@ -174,12 +186,14 @@ namespace Grill_Thrills
 
 		private Tween SliderColorTween(Color color, float time)
 		{
-			return sliderFillImg.DOColor(color, time).SetEase(Ease.Linear);
+			sliderColorTween = sliderFillImg.DOColor(color, time).SetEase(Ease.Linear);
+			return sliderColorTween;
 		}
 
 		private Tween FoodMaterialColorTween(Material mat, Color color, float time)
 		{
-			return mat.DOColor(color, time).SetEase(Ease.Linear);
+			foodColorTween = mat.DOColor(color, time).SetEase(Ease.Linear);
+			return foodColorTween;
 		}
 
 		private Tween BurnFood(float time)
@@ -190,6 +204,12 @@ namespace Grill_Thrills
 		private Tween DisappearFood(float time)
 		{
 			return transform.DOLocalMoveZ(0.05555f, time).SetEase(Ease.InOutQuad);
+		}
+
+		private void ShowFeedback(SpriteRenderer renderer, float time)
+		{
+			renderer.transform.DOScale(0.0033f, time);
+			renderer.DOFade(1f, time).SetEase(Ease.InOutQuad);
 		}
 	}
 }
