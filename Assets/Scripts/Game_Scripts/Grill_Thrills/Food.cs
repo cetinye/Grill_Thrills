@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections;
 
 namespace Grill_Thrills
 {
@@ -35,6 +36,11 @@ namespace Grill_Thrills
 		[SerializeField] private float spatulaRotTime;
 
 		[Space()]
+		[Header("Particles")]
+		[SerializeField] private ParticleSystem smoke;
+		[SerializeField] private ParticleSystem burn;
+
+		[Space()]
 		[Header("Feedbacks")]
 		[SerializeField] private SpriteRenderer correctSpr;
 		[SerializeField] private SpriteRenderer wrongSpr;
@@ -42,6 +48,9 @@ namespace Grill_Thrills
 		[Space()]
 		[Header("Materials")]
 		[SerializeField] private MeshRenderer meshRenderer;
+		[Space()]
+		[SerializeField] private Material dissolveMaterial;
+		[SerializeField] private float dissolveTime;
 		[Space()]
 		[SerializeField] private Material meatMat;
 		[SerializeField] private Material fatMat;
@@ -130,7 +139,7 @@ namespace Grill_Thrills
 				ShowFeedback(correctSpr, 0.5f);
 				levelManager.Correct();
 				SpawnSpatula();
-				Invoke(nameof(DisappearFood), 0.5f);
+				// Invoke(nameof(DisappearFood), 0.5f);
 			}
 			else
 			{
@@ -147,7 +156,8 @@ namespace Grill_Thrills
 			Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
 			ShowFeedback(wrongSpr, 0.5f);
 			levelManager.Wrong();
-			Invoke(nameof(BurnFood), 0.5f);
+			// Invoke(nameof(BurnFood), 0.5f);
+			BurnFood();
 		}
 
 		private void SpawnSpatula()
@@ -159,6 +169,7 @@ namespace Grill_Thrills
 			Sequence spatulaSeq = DOTween.Sequence();
 			spatulaSeq.Append(spawnedSpatula.transform.DOLocalMove(Vector3.zero, 0.5f));
 			spatulaSeq.Append(spawnedSpatula.transform.DOLocalRotate(endSpatulaRotation, spatulaRotTime));
+			spatulaSeq.OnComplete(() => DisappearFood());
 		}
 
 		private void GetRandomIdealCookRange()
@@ -202,13 +213,16 @@ namespace Grill_Thrills
 		private void BurnFood()
 		{
 			DisableCollision();
-			BurnFood(1f).OnComplete(() => DestroyFood());
+			StartCoroutine(DissolveRoutine());
+			// burn.Play();
+			// BurnFood(1f).OnComplete(() => DestroyFood());
 		}
 
 		private void DisappearFood()
 		{
 			DisableCollision();
-			DisappearFood(1f).OnComplete(() => DestroyFood());
+			smoke.Play();
+			DisappearFood(0.5f).OnComplete(() => DestroyFood());
 		}
 
 		private void DisableCollision()
@@ -241,7 +255,7 @@ namespace Grill_Thrills
 
 		private Tween DisappearFood(float time)
 		{
-			return transform.DOLocalMoveZ(0.05555f, time).SetEase(Ease.InOutQuad);
+			return transform.DOLocalMoveZ(transform.localPosition.z, time).SetEase(Ease.InOutQuad);
 		}
 
 		private void ShowFeedback(SpriteRenderer renderer, float time)
@@ -254,6 +268,35 @@ namespace Grill_Thrills
 		{
 			levelManager.FreeSpawnPoint(slotIndex);
 			Destroy(gameObject);
+		}
+
+		private IEnumerator DissolveRoutine()
+		{
+			Material[] newMaterials = new Material[meshRenderer.materials.Length];
+
+			// Instantiate and assign dissolve materials
+			for (int i = 0; i < meshRenderer.materials.Length; i++)
+			{
+				Material dissolve = Instantiate(dissolveMaterial) as Material;
+				newMaterials[i] = dissolve;
+			}
+
+			meshRenderer.materials = newMaterials;
+
+			// Apply dissolve effect
+			for (int i = 0; i < meshRenderer.materials.Length; i++)
+			{
+				int index = i; // Capture the index for the closure
+				meshRenderer.materials[i].DOFloat(0.65f, "_Dissolve_Amount", dissolveTime).OnComplete(() =>
+				{
+					if (index == meshRenderer.materials.Length - 1)
+					{
+						DestroyFood();
+					}
+				});
+			}
+
+			yield return new WaitForSeconds(1f);
 		}
 	}
 }
