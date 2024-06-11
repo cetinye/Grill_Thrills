@@ -136,6 +136,10 @@ namespace Grill_Thrills
 			if (!isClickable) return;
 
 			isClickable = false;
+			isOnGrill = false;
+			sliderColorTween.Kill();
+			foodColorTween.Kill();
+			StopMaterialTweens();
 
 			if (isOnGrill && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f) > slider.value)
 			{
@@ -149,11 +153,6 @@ namespace Grill_Thrills
 			{
 				Wrong();
 			}
-
-			isOnGrill = false;
-			sliderColorTween.Kill();
-			foodColorTween.Kill();
-			StopMaterialTweens();
 		}
 
 		private void Wrong()
