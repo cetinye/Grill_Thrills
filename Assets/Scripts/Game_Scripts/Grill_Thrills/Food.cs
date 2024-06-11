@@ -153,6 +153,7 @@ namespace Grill_Thrills
 			isOnGrill = false;
 			sliderColorTween.Kill();
 			foodColorTween.Kill();
+			StopMaterialTweens();
 		}
 
 		private void Wrong()
@@ -222,6 +223,14 @@ namespace Grill_Thrills
 
 			if (boneMat != null)
 				FoodMaterialColorTween(meshRenderer.materials[boneMatIndex], b_cookedColor, idealCookTime).OnComplete(() => FoodMaterialColorTween(meshRenderer.materials[boneMatIndex], b_overcookedColor, cookTime - timeOnGrill)); ;
+		}
+
+		private void StopMaterialTweens()
+		{
+			for (int i = 0; i < meshRenderer.materials.Length; i++)
+			{
+				meshRenderer.materials[i].DOKill();
+			}
 		}
 
 		private void BurnFood()
