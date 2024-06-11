@@ -74,6 +74,10 @@ namespace Grill_Thrills
 		[Space()]
 		[Header("Tweens")]
 		private Tween sliderColorTween, foodColorTween;
+		[SerializeField] private float explosionForce;
+		[SerializeField] private float explosionRadius;
+		[SerializeField] private float upwardsModifier;
+		[SerializeField] private ForceMode forceMode;
 
 		void Awake()
 		{
@@ -169,7 +173,17 @@ namespace Grill_Thrills
 			Sequence spatulaSeq = DOTween.Sequence();
 			spatulaSeq.Append(spawnedSpatula.transform.DOLocalMove(Vector3.zero, 0.5f));
 			spatulaSeq.Append(spawnedSpatula.transform.DOLocalRotate(endSpatulaRotation, spatulaRotTime));
-			spatulaSeq.OnComplete(() => DisappearFood());
+			spatulaSeq.OnComplete(() =>
+			{
+				spawnedSpatula.SetActive(false);
+				slider.gameObject.SetActive(false);
+				ideallyCookedSliderFillImg.gameObject.SetActive(false);
+				correctSpr.gameObject.SetActive(false);
+				rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, forceMode);
+				Invoke(nameof(DestroyFood), 0.75f);
+			});
+
+			// spatulaSeq.OnComplete(() => DisappearFood());
 		}
 
 		private void GetRandomIdealCookRange()
@@ -220,7 +234,7 @@ namespace Grill_Thrills
 
 		private void DisappearFood()
 		{
-			DisableCollision();
+			// DisableCollision();
 			smoke.Play();
 			DisappearFood(0.5f).OnComplete(() => DestroyFood());
 		}

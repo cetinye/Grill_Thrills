@@ -313,6 +313,10 @@ MonoBehaviour:
   f_overcookedColor: {r: 0.6039216, g: 0.36862746, b: 0.30588236, a: 1}
   b_cookedColor: {r: 0, g: 0, b: 0, a: 1}
   b_overcookedColor: {r: 0, g: 0, b: 0, a: 1}
+  explosionForce: 200
+  explosionRadius: 1
+  upwardsModifier: 3
+  forceMode: 0
 --- !u!54 &7492152385737261868
 Rigidbody:
   m_ObjectHideFlags: 0
