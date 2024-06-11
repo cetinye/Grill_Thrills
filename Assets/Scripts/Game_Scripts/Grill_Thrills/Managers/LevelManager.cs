@@ -20,6 +20,7 @@ namespace Grill_Thrills
 		[Header("Scene Objects")]
 		[SerializeField] private BoxCollider grillCollider;
 		[SerializeField] private Transform spawnParent;
+		[SerializeField] private Material ditherTransparencyMat;
 		[SerializeField] private List<Transform> spawnPoints = new List<Transform>();
 		[SerializeField] private List<Food> foodPrefabs = new List<Food>();
 		[SerializeField] private List<int> usedSpawnPointIndexes = new List<int>();
@@ -131,6 +132,9 @@ namespace Grill_Thrills
 			mainCamera.transform.DOMove(endPos, 5f);
 			mainCamera.transform.DORotate(endRot, 5f);
 			yield return new WaitForSeconds(5f);
+
+			ditherTransparencyMat.DOFloat(0f, "_Opacity", 1f);
+			yield return new WaitForSeconds(1f);
 
 			GameStateManager.SetGameState(GameState.Playing);
 		}

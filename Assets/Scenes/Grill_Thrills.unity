@@ -1703,6 +1703,8 @@ MonoBehaviour:
   endRot: {x: 60.000004, y: 0, z: 0}
   grillCollider: {fileID: 1893881995}
   spawnParent: {fileID: 6301094741975269287}
+  ditherTransparencyMat: {fileID: 2100000, guid: 539015a4c5b89be4e9da13003ae7b48d,
+    type: 2}
   spawnPoints:
   - {fileID: 2683372166340014156}
   - {fileID: 704721850372269183}
@@ -7571,7 +7573,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb9c0117a4e9f0949bf961cacbc348f6, type: 2}
+  - {fileID: 2100000, guid: 539015a4c5b89be4e9da13003ae7b48d, type: 2}
   - {fileID: 2100000, guid: 48a0e58dea9a1de4a9a08a5a2019977d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
