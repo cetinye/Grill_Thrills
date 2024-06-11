@@ -29,6 +29,12 @@ namespace Grill_Thrills
 		private bool isColoringStarted = false;
 
 		[Space()]
+		[Header("Spatula")]
+		[SerializeField] private GameObject spatula;
+		[SerializeField] private Vector3 endSpatulaRotation;
+		[SerializeField] private float spatulaRotTime;
+
+		[Space()]
 		[Header("Feedbacks")]
 		[SerializeField] private SpriteRenderer correctSpr;
 		[SerializeField] private SpriteRenderer wrongSpr;
@@ -123,6 +129,7 @@ namespace Grill_Thrills
 				Debug.LogWarning("IDEALLY COOKED " + gameObject.name);
 				ShowFeedback(correctSpr, 0.5f);
 				levelManager.Correct();
+				SpawnSpatula();
 				Invoke(nameof(DisappearFood), 0.5f);
 			}
 			else
@@ -141,6 +148,17 @@ namespace Grill_Thrills
 			ShowFeedback(wrongSpr, 0.5f);
 			levelManager.Wrong();
 			Invoke(nameof(BurnFood), 0.5f);
+		}
+
+		private void SpawnSpatula()
+		{
+			GameObject spawnedSpatula = Instantiate(spatula, transform);
+			spawnedSpatula.transform.localPosition = new Vector3(0f, -0.01289f, 0.00243f);
+			spawnedSpatula.SetActive(true);
+
+			Sequence spatulaSeq = DOTween.Sequence();
+			spatulaSeq.Append(spawnedSpatula.transform.DOLocalMove(Vector3.zero, 0.5f));
+			spatulaSeq.Append(spawnedSpatula.transform.DOLocalRotate(endSpatulaRotation, spatulaRotTime));
 		}
 
 		private void GetRandomIdealCookRange()
