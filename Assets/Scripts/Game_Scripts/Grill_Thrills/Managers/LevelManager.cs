@@ -40,6 +40,11 @@ namespace Grill_Thrills
 			mainCamera.transform.SetPositionAndRotation(startPos, Quaternion.Euler(startRot));
 		}
 
+		void OnEnable()
+		{
+			ditherTransparencyMat.SetFloat("_Opacity", 1f);
+		}
+
 		void Start()
 		{
 			GameStateManager.OnGameStateChanged += OnGameStateChanged;
