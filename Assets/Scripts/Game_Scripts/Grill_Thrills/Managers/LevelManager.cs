@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Grill_Thrills
 {
@@ -43,6 +44,13 @@ namespace Grill_Thrills
 		[Header("Flash Interval")]
 		[SerializeField] private bool isFlashable = true;
 
+		public Slider levelSlider;
+
+		public void LevelSlider()
+		{
+			PlayerPrefs.SetInt("Grill_Thrills_LevelID", Mathf.CeilToInt(levelSlider.value));
+		}
+
 		void Awake()
 		{
 			if (instance == null)
@@ -77,6 +85,8 @@ namespace Grill_Thrills
 
 		private void AssignLevelVariables()
 		{
+			levelId = PlayerPrefs.GetInt("Grill_Thrills_LevelID", 0);
+
 			levelSO = levels[levelId];
 		}
 
