@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d24a16c172b233e4abc3cc8c12b2ed5e, type: 3}
+  m_Name: GT_Level 2
+  m_EditorClassIdentifier: 
+  levelId: 2
+  fastIncluded: 0
+  mediumIncluded: 0
+  slowIncluded: 1
+  fastCookSpeed: 0
+  mediumCookSpeed: 0
+  slowCookSpeed: 5
+  fastSpawnRate: 0
+  mediumSpawnRate: 0
+  slowSpawnRate: 100
+  fastCookRange: 0
+  mediumCookRange: 0
+  slowCookRange: 0.25
+  numberOfMaxFoods: 4
+  spawnFrequency: 4
+  minScoreToPass: 24
+  idealCookScore: 0.48
+  rawOvercookScore: 0.24

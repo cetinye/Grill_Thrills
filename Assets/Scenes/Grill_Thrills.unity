@@ -1698,6 +1698,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiManager: {fileID: 196286189}
+  levelId: 0
+  levelSO: {fileID: 0}
+  levels:
+  - {fileID: 11400000, guid: 12abfe93362c0464887edd0bc291a3a4, type: 2}
+  - {fileID: 11400000, guid: 33fb1a5b6de6b864199e854704c1d4ed, type: 2}
+  - {fileID: 11400000, guid: 099c008b7a31dac47b72e5598bfa7666, type: 2}
+  - {fileID: 11400000, guid: 47c55e865b3a93c4bb6b118e9cecb896, type: 2}
+  - {fileID: 11400000, guid: df9c23d144423d74fbb2dec48637a647, type: 2}
+  - {fileID: 11400000, guid: 6a91e3eaac4ac00419504eb46261b598, type: 2}
+  - {fileID: 11400000, guid: f92df8ab209306f4e915fe4c1c2a44ba, type: 2}
+  - {fileID: 11400000, guid: 36c6ab0cc0d13174292a35635ba444c9, type: 2}
+  - {fileID: 11400000, guid: dfc8340ef80d9aa4e8d5d7b31588a551, type: 2}
+  - {fileID: 11400000, guid: 9ff4abcf004ea2e408c7607af6f25b4b, type: 2}
+  - {fileID: 11400000, guid: 7199e29a6a9484743af59a7dfa05c99b, type: 2}
+  - {fileID: 11400000, guid: 2bdb04e109cfb8f44953973e2a42aae3, type: 2}
+  - {fileID: 11400000, guid: e00d52c174465ec419f87b94e2a940c8, type: 2}
+  - {fileID: 11400000, guid: a0da60f0b7cc99e4d94ae3fb97188b85, type: 2}
+  - {fileID: 11400000, guid: ed49d1d1ed39268478bb7488831a9058, type: 2}
+  - {fileID: 11400000, guid: 4073040693925e74b987fc9fba7ea777, type: 2}
+  - {fileID: 11400000, guid: ddeb6e53b7d7b8147842f25de6e8999b, type: 2}
+  - {fileID: 11400000, guid: 5fced54c4260fb5419c972005e8bfa23, type: 2}
+  - {fileID: 11400000, guid: bc6994e38cef11340b33a1645656b133, type: 2}
+  - {fileID: 11400000, guid: f177e9ddb066541498cc34ba21293af0, type: 2}
+  - {fileID: 11400000, guid: 640644bff50d7f142bb88075b3cc8d8e, type: 2}
+  - {fileID: 11400000, guid: f00873b7437de3344b699807b0d9cd81, type: 2}
   mainCamera: {fileID: 330585545}
   startPos: {x: -1.034, y: 1.343, z: 0.28}
   startRot: {x: 37.268406, y: 26.318933, z: -0.000009655552}

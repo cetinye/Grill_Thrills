@@ -10,6 +10,11 @@ namespace Grill_Thrills
 		public static LevelManager instance;
 		[SerializeField] private UIManager uiManager;
 
+		[Header("Level Variables")]
+		[SerializeField] private int levelId;
+		[SerializeField] private LevelSO levelSO;
+		[SerializeField] private List<LevelSO> levels = new List<LevelSO>();
+
 		[Header("Camera")]
 		public Camera mainCamera;
 		[SerializeField] private Vector3 startPos;
@@ -46,6 +51,9 @@ namespace Grill_Thrills
 			}
 
 			mainCamera.transform.SetPositionAndRotation(startPos, Quaternion.Euler(startRot));
+
+			GameStateManager.OnGameStateChanged += OnGameStateChanged;
+
 		}
 
 		void OnEnable()
@@ -55,13 +63,23 @@ namespace Grill_Thrills
 
 		void Start()
 		{
-			GameStateManager.OnGameStateChanged += OnGameStateChanged;
-			GameStateManager.SetGameState(GameState.Idle);
+			StartGame();
 		}
 
 		void Update()
 		{
 			LevelTimer();
+		}
+
+		private void AssignLevelVariables()
+		{
+			levelSO = levels[levelId];
+		}
+
+		private void StartGame()
+		{
+			AssignLevelVariables();
+			GameStateManager.SetGameState(GameState.Idle);
 		}
 
 		private void OnGameStateChanged()
