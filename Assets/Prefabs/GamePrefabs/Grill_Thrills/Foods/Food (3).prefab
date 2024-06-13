@@ -151,6 +151,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 968d08c19c9c2fb429536184a7b96656, type: 2}
     - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
+      propertyPath: foodType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
+        type: 3}
       propertyPath: meshRenderer
       value: 
       objectReference: {fileID: 3776244936514428307}

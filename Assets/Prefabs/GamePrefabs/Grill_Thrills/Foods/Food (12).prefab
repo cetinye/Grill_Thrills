@@ -156,6 +156,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5517963f4eaa9f84ab85830b476d8d7e, type: 2}
     - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
+      propertyPath: foodType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
+        type: 3}
       propertyPath: fatMatIndex
       value: 1
       objectReference: {fileID: 0}

@@ -10,6 +10,7 @@ namespace Grill_Thrills
 		private LevelManager levelManager;
 
 		[Header("Food Variables")]
+		[SerializeField] private FoodType foodType;
 		[SerializeField] private float cookTime;
 		[SerializeField] private float cookTimeMultiplier;
 		[SerializeField] private float idealCookTime;
@@ -303,5 +304,12 @@ namespace Grill_Thrills
 
 			yield return new WaitForSeconds(1f);
 		}
+	}
+
+	public enum FoodType
+	{
+		Fast,
+		Medium,
+		Slow
 	}
 }

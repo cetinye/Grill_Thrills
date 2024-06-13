@@ -15,6 +15,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 349b29bd40048b743a13ba1fadcd42b6, type: 2}
     - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
         type: 3}
+      propertyPath: foodType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1782127901229749481, guid: 4037dbdadf9b8a1498b54879f82b1cb2,
+        type: 3}
       propertyPath: m_cookedColor.g
       value: 0.047058824
       objectReference: {fileID: 0}
