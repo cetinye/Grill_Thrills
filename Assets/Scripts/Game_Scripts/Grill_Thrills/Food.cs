@@ -36,11 +36,6 @@ namespace Grill_Thrills
 		[SerializeField] private float spatulaRotTime;
 
 		[Space()]
-		[Header("Particles")]
-		[SerializeField] private ParticleSystem smoke;
-		[SerializeField] private ParticleSystem burn;
-
-		[Space()]
 		[Header("Feedbacks")]
 		[SerializeField] private SpriteRenderer correctSpr;
 		[SerializeField] private SpriteRenderer wrongSpr;
@@ -145,7 +140,6 @@ namespace Grill_Thrills
 				ShowFeedback(correctSpr, 0.5f);
 				levelManager.Correct();
 				SpawnSpatula();
-				// Invoke(nameof(DisappearFood), 0.5f);
 			}
 			else
 			{
@@ -161,7 +155,6 @@ namespace Grill_Thrills
 			Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
 			ShowFeedback(wrongSpr, 0.5f);
 			levelManager.Wrong();
-			// Invoke(nameof(BurnFood), 0.5f);
 			BurnFood();
 		}
 
@@ -183,8 +176,6 @@ namespace Grill_Thrills
 				rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, forceMode);
 				Invoke(nameof(DestroyFood), 0.75f);
 			});
-
-			// spatulaSeq.OnComplete(() => DisappearFood());
 		}
 
 		private void GetRandomIdealCookRange()
@@ -237,15 +228,6 @@ namespace Grill_Thrills
 		{
 			DisableCollision();
 			StartCoroutine(DissolveRoutine());
-			// burn.Play();
-			// BurnFood(1f).OnComplete(() => DestroyFood());
-		}
-
-		private void DisappearFood()
-		{
-			// DisableCollision();
-			smoke.Play();
-			DisappearFood(0.5f).OnComplete(() => DestroyFood());
 		}
 
 		private void DisableCollision()

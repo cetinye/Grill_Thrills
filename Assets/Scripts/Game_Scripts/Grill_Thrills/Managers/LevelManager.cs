@@ -26,6 +26,14 @@ namespace Grill_Thrills
 		[SerializeField] private List<int> usedSpawnPointIndexes = new List<int>();
 		private int correctCount = 0, wrongCount = 0;
 
+		[Header("Timer Variables")]
+		[SerializeField] private float levelTime;
+		private bool isLevelTimerOn = false;
+		private float levelTimer;
+
+		[Header("Flash Interval")]
+		[SerializeField] private bool isFlashable = true;
+
 		void Awake()
 		{
 			if (instance == null)
@@ -51,6 +59,11 @@ namespace Grill_Thrills
 			GameStateManager.SetGameState(GameState.Idle);
 		}
 
+		void Update()
+		{
+			LevelTimer();
+		}
+
 		private void OnGameStateChanged()
 		{
 			switch (GameStateManager.GetGameState())
@@ -62,11 +75,40 @@ namespace Grill_Thrills
 
 				case GameState.Playing:
 					Reset();
+					levelTimer = levelTime;
+					isLevelTimerOn = true;
 					InvokeRepeating(nameof(SpawnFood), 1f, 1f);
+					break;
+
+				case GameState.TimesUp:
+					CancelInvoke(nameof(SpawnFood));
+					isLevelTimerOn = false;
+					levelTimer = 0f;
+					uiManager.UpdateTimer(levelTimer);
 					break;
 
 				default:
 					break;
+			}
+		}
+
+		private void LevelTimer()
+		{
+			if (!isLevelTimerOn) return;
+
+			levelTimer -= Time.deltaTime;
+			uiManager.UpdateTimer(levelTimer);
+
+			if (levelTimer <= 0f)
+			{
+				GameStateManager.SetGameState(GameState.TimesUp);
+			}
+
+			if (levelTimer <= 5.2f && isFlashable)
+			{
+				isFlashable = false;
+				// GameManager.instance.PlayFx("Countdown", 0.7f, 1f);
+				uiManager.FlashRed();
 			}
 		}
 

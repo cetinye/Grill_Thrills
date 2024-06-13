@@ -21,4 +21,5 @@ public enum GameState
 {
     Idle,
     Playing,
+    TimesUp
 }
