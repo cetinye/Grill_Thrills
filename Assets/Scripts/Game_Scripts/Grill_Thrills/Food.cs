@@ -11,8 +11,7 @@ namespace Grill_Thrills
 
 		[Header("Food Variables")]
 		[SerializeField] private FoodType foodType;
-		[SerializeField] private float cookTime;
-		[SerializeField] private float cookTimeMultiplier;
+		private float cookTime;
 		[SerializeField] private float idealCookTime;
 		private float timeOnGrill;
 		private bool isOnGrill = false;
@@ -26,6 +25,8 @@ namespace Grill_Thrills
 		[SerializeField] private Slider slider;
 		[SerializeField] private Image sliderFillImg;
 		[SerializeField] private Image ideallyCookedSliderFillImg;
+		[SerializeField] private Image rawCookedSliderFillImg;
+		[SerializeField] private Image overCookedSliderFillImg;
 		[SerializeField] private Color ideallyCookedColor;
 		[SerializeField] private Color overCookedColor;
 		private bool isColoringStarted = false;
@@ -103,7 +104,8 @@ namespace Grill_Thrills
 		{
 			levelManager = LevelManager.instance;
 
-			GetRandomIdealCookRange();
+			AssignFoodVariables();
+			ArrangeCookSlider();
 		}
 
 		void OnCollisionEnter(Collision other)
@@ -135,13 +137,28 @@ namespace Grill_Thrills
 			foodColorTween.Kill();
 			StopMaterialTweens();
 
-			if (isOnGrill && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f) > slider.value)
+			// Clicked on raw range
+			if (isOnGrill && (1 - 0.25f - rawCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) > slider.value)
 			{
-				Debug.LogWarning("IDEALLY COOKED " + gameObject.name);
 				ShowFeedback(correctSpr, 0.5f);
-				levelManager.Correct();
+				levelManager.Correct(false);
 				SpawnSpatula();
 			}
+			// Clicked on ideally cooked range
+			else if (isOnGrill && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f - overCookedSliderFillImg.fillAmount) > slider.value)
+			{
+				ShowFeedback(correctSpr, 0.5f);
+				levelManager.Correct(true);
+				SpawnSpatula();
+			}
+			// Clicked on overcooked range
+			else if (isOnGrill && (1 - 0.25f - overCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f) > slider.value)
+			{
+				ShowFeedback(correctSpr, 0.5f);
+				levelManager.Correct(false);
+				SpawnSpatula();
+			}
+			// Out of range
 			else
 			{
 				Wrong();
@@ -153,7 +170,6 @@ namespace Grill_Thrills
 
 		private void Wrong()
 		{
-			Debug.LogWarning("!! NOT IDEALLY COOKED " + gameObject.name);
 			ShowFeedback(wrongSpr, 0.5f);
 			levelManager.Wrong();
 			BurnFood();
@@ -175,18 +191,14 @@ namespace Grill_Thrills
 				ideallyCookedSliderFillImg.gameObject.SetActive(false);
 				correctSpr.gameObject.SetActive(false);
 				rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, forceMode);
+				boxCollider.enabled = false;
 				Invoke(nameof(DestroyFood), 0.75f);
 			});
 		}
 
-		private void GetRandomIdealCookRange()
-		{
-			ideallyCookedSliderFillImg.fillAmount = Random.Range(0.05f, 0.25f);
-		}
-
 		private void UpdateSlider()
 		{
-			slider.value = timeOnGrill / (cookTime / cookTimeMultiplier);
+			slider.value = timeOnGrill / cookTime;
 
 			if (slider.value >= 1)
 			{
@@ -240,6 +252,43 @@ namespace Grill_Thrills
 		public void SetSlotIndex(int index)
 		{
 			slotIndex = index;
+		}
+
+		public FoodType GetFoodType()
+		{
+			return foodType;
+		}
+
+		private void AssignFoodVariables()
+		{
+			LevelSO levelSO = levelManager.GetLevelSO();
+
+			switch (foodType)
+			{
+				case FoodType.Fast:
+					cookTime = levelSO.fastCookSpeed;
+					ideallyCookedSliderFillImg.fillAmount = levelSO.fastCookRange;
+					break;
+
+				case FoodType.Medium:
+					cookTime = levelSO.mediumCookSpeed;
+					ideallyCookedSliderFillImg.fillAmount = levelSO.mediumCookRange;
+					break;
+
+				case FoodType.Slow:
+					cookTime = levelSO.slowCookSpeed;
+					ideallyCookedSliderFillImg.fillAmount = levelSO.slowCookRange;
+					break;
+			}
+		}
+
+		private void ArrangeCookSlider()
+		{
+			overCookedSliderFillImg.fillAmount = 0.05f;
+			rawCookedSliderFillImg.fillAmount = 0.05f;
+
+			ideallyCookedSliderFillImg.fillAmount += overCookedSliderFillImg.fillAmount;
+			rawCookedSliderFillImg.fillAmount += ideallyCookedSliderFillImg.fillAmount;
 		}
 
 		private Tween SliderColorTween(Color color, float time)

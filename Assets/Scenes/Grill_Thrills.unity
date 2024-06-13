@@ -1763,8 +1763,8 @@ MonoBehaviour:
   - {fileID: 9021869165279993860, guid: 58e19aa5a5295604386ddf5ca5d86155, type: 3}
   - {fileID: 2412396739745489559, guid: 04471d438a444ed49bf6c1c39b8f8883, type: 3}
   - {fileID: 6021044544478208238, guid: 1f5899a6916a4ef47ac50ed0f320530e, type: 3}
-  usedSpawnPointIndexes: 
-  levelTime: 120
+  foodsToSpawn: []
+  levelTime: 60
   isFlashable: 1
 --- !u!1001 &503856066
 PrefabInstance:

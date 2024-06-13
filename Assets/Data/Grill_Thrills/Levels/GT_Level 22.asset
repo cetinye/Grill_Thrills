@@ -22,11 +22,11 @@ MonoBehaviour:
   fastSpawnRate: 33
   mediumSpawnRate: 33
   slowSpawnRate: 33
-  fastCookRange: 25
-  mediumCookRange: 25
-  slowCookRange: 25
+  fastCookRange: 0.025
+  mediumCookRange: 0.025
+  slowCookRange: 0.025
   numberOfMaxFoods: 9
-  spawnFrequency: 3
+  spawnFrequency: 0.5
   minScoreToPass: 934
   idealCookScore: 18.4
   rawOvercookScore: 9.2

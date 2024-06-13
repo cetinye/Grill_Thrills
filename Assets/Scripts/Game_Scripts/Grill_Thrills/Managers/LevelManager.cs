@@ -28,8 +28,12 @@ namespace Grill_Thrills
 		[SerializeField] private Material ditherTransparencyMat;
 		[SerializeField] private List<Transform> spawnPoints = new List<Transform>();
 		[SerializeField] private List<Food> foodPrefabs = new List<Food>();
-		[SerializeField] private List<int> usedSpawnPointIndexes = new List<int>();
-		private int correctCount = 0, wrongCount = 0;
+		private List<int> usedSpawnPointIndexes = new List<int>();
+		private List<Food> fastFoods = new List<Food>();
+		private List<Food> mediumFoods = new List<Food>();
+		private List<Food> slowFoods = new List<Food>();
+		[SerializeField] private List<Food> foodsToSpawn = new List<Food>();
+		private int ideallyCookedCount = 0, correctCount = 0, wrongCount = 0;
 
 		[Header("Timer Variables")]
 		[SerializeField] private float levelTime;
@@ -79,6 +83,9 @@ namespace Grill_Thrills
 		private void StartGame()
 		{
 			AssignLevelVariables();
+			CategorizeFoods();
+			PrepareFoodsToSpawn();
+
 			GameStateManager.SetGameState(GameState.Idle);
 		}
 
@@ -87,15 +94,13 @@ namespace Grill_Thrills
 			switch (GameStateManager.GetGameState())
 			{
 				case GameState.Idle:
-					Reset();
 					StartCoroutine(MoveCameraRoutine());
 					break;
 
 				case GameState.Playing:
-					Reset();
 					levelTimer = levelTime;
 					isLevelTimerOn = true;
-					InvokeRepeating(nameof(SpawnFood), 1f, 1f);
+					InvokeRepeating(nameof(SpawnFood), 1f, levelSO.spawnFrequency);
 					break;
 
 				case GameState.TimesUp:
@@ -136,14 +141,68 @@ namespace Grill_Thrills
 			if (usedSpawnPointIndexes.Count == spawnPoints.Count)
 				return;
 
+			// if max food amount present on grill, dont spawn
+			if (usedSpawnPointIndexes.Count >= levelSO.numberOfMaxFoods)
+				return;
+
 			for (int i = 0; i < 1; i++)
 			{
-				int foodIndex = Random.Range(0, foodPrefabs.Count);
 				int spawnPointIndex = GetSpawnPointIndex();
-				Food food = Instantiate(foodPrefabs[foodIndex], spawnPoints[spawnPointIndex].position, Quaternion.Euler(new Vector3(0f, 0f, 0f)), spawnParent);
+				Food food = Instantiate(GetFood(), spawnPoints[spawnPointIndex].position, Quaternion.Euler(new Vector3(0f, 0f, 0f)), spawnParent);
 				food.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
 				food.SetSlotIndex(spawnPointIndex);
 			}
+		}
+
+		private Food GetFood()
+		{
+			return foodsToSpawn[Random.Range(0, foodsToSpawn.Count)];
+		}
+
+		private void CategorizeFoods()
+		{
+			foreach (Food food in foodPrefabs)
+			{
+				if (food.GetFoodType() == FoodType.Fast)
+					fastFoods.Add(food);
+				else if (food.GetFoodType() == FoodType.Medium)
+					mediumFoods.Add(food);
+				else if (food.GetFoodType() == FoodType.Slow)
+					slowFoods.Add(food);
+			}
+		}
+
+		private void PrepareFoodsToSpawn()
+		{
+			for (int i = 0; i < levelSO.fastSpawnRate; i++)
+			{
+				foodsToSpawn.Add(GetFastFood());
+			}
+
+			for (int i = 0; i < levelSO.mediumSpawnRate; i++)
+			{
+				foodsToSpawn.Add(GetMediumFood());
+			}
+
+			for (int i = 0; i < levelSO.slowSpawnRate; i++)
+			{
+				foodsToSpawn.Add(GetSlowFood());
+			}
+		}
+
+		private Food GetFastFood()
+		{
+			return fastFoods[Random.Range(0, fastFoods.Count)];
+		}
+
+		private Food GetMediumFood()
+		{
+			return mediumFoods[Random.Range(0, mediumFoods.Count)];
+		}
+
+		private Food GetSlowFood()
+		{
+			return slowFoods[Random.Range(0, slowFoods.Count)];
 		}
 
 		private int GetSpawnPointIndex()
@@ -171,10 +230,17 @@ namespace Grill_Thrills
 			return grillCollider;
 		}
 
-		public void Correct()
+		public void Correct(bool isIdeal)
 		{
-			correctCount++;
-			uiManager.UpdateCorrectText(correctCount);
+			if (isIdeal)
+			{
+				ideallyCookedCount++;
+			}
+			else
+			{
+				correctCount++;
+			}
+			uiManager.UpdateCorrectText(correctCount + ideallyCookedCount);
 		}
 
 		public void Wrong()
@@ -183,10 +249,20 @@ namespace Grill_Thrills
 			uiManager.UpdateWrongText(wrongCount);
 		}
 
+		public LevelSO GetLevelSO()
+		{
+			return levelSO;
+		}
+
 		private void Reset()
 		{
 			usedSpawnPointIndexes.Clear();
+			fastFoods.Clear();
+			mediumFoods.Clear();
+			slowFoods.Clear();
+			foodsToSpawn.Clear();
 
+			ideallyCookedCount = 0;
 			correctCount = 0;
 			wrongCount = 0;
 		}

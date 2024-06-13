@@ -26,7 +26,7 @@ MonoBehaviour:
   mediumCookRange: 0.25
   slowCookRange: 0.2
   numberOfMaxFoods: 4
-  spawnFrequency: 4
+  spawnFrequency: 1
   minScoreToPass: 35
   idealCookScore: 0.69
   rawOvercookScore: 0.35
