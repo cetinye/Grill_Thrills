@@ -14,6 +14,15 @@ namespace Grill_Thrills
 		[SerializeField] private TMP_Text correctText;
 		[SerializeField] private TMP_Text wrongText;
 
+		[Header("Slider Variables")]
+		[SerializeField] private RectTransform sliderRectTransform;
+		[SerializeField] private Vector3 startPos;
+		[SerializeField] private Vector3 endPos;
+		[SerializeField] private float lerpFactor;
+		[SerializeField] private float score;
+		private Vector3 target;
+		private float stepAmount;
+
 		[Header("Flash Variables")]
 		[SerializeField] private float flashInterval = 0.5f;
 		private Color defaultColor;
@@ -22,6 +31,16 @@ namespace Grill_Thrills
 		{
 			levelManager = LevelManager.instance;
 			defaultColor = levelTimerText.color;
+			sliderRectTransform.localPosition = startPos;
+
+			CalculateStepAmount();
+		}
+
+		void Update()
+		{
+			// target = LevelManager.instance.GetScore() * stepAmount;
+			target = new Vector3(startPos.x + (score * stepAmount), sliderRectTransform.localPosition.y, sliderRectTransform.localPosition.z);
+			sliderRectTransform.localPosition = Vector3.Lerp(sliderRectTransform.localPosition, target, Time.deltaTime * lerpFactor);
 		}
 
 		public void UpdateTimer(float time)
@@ -37,6 +56,11 @@ namespace Grill_Thrills
 		public void UpdateWrongText(int wrongCount)
 		{
 			wrongText.text = "Wrong: " + wrongCount;
+		}
+
+		private void CalculateStepAmount()
+		{
+			stepAmount = (endPos.x - startPos.x) / levelManager.GetLevelSO().minScoreToPass;
 		}
 
 		public void FlashRed()

@@ -66,6 +66,7 @@ namespace Grill_Thrills
 
 			GameStateManager.OnGameStateChanged += OnGameStateChanged;
 
+			AssignLevelVariables();
 		}
 
 		void OnEnable()
@@ -92,7 +93,6 @@ namespace Grill_Thrills
 
 		private void StartGame()
 		{
-			AssignLevelVariables();
 			CategorizeFoods();
 			PrepareFoodsToSpawn();
 
@@ -262,6 +262,11 @@ namespace Grill_Thrills
 		public LevelSO GetLevelSO()
 		{
 			return levelSO;
+		}
+
+		public float GetScore()
+		{
+			return 0;
 		}
 
 		private void Reset()
