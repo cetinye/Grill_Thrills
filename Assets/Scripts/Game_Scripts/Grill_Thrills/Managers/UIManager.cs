@@ -38,8 +38,15 @@ namespace Grill_Thrills
 
 		void Update()
 		{
+			// set target slider position
 			// target = LevelManager.instance.GetScore() * stepAmount;
 			target = new Vector3(startPos.x + (score * stepAmount), sliderRectTransform.localPosition.y, sliderRectTransform.localPosition.z);
+
+			// prevent slider from going out of bounds
+			if (target.x > endPos.x)
+				target = endPos;
+
+			// lerp slider fill
 			sliderRectTransform.localPosition = Vector3.Lerp(sliderRectTransform.localPosition, target, Time.deltaTime * lerpFactor);
 		}
 
