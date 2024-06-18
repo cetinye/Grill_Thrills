@@ -648,10 +648,7 @@ MonoBehaviour:
   sliderRectTransform: {fileID: 175313902}
   startPos: {x: -533, y: 0, z: 0}
   endPos: {x: -2, y: 0, z: 0}
-  lerpFactor: 5
-  score: 0
-  target: {x: 0, y: 0, z: 0}
-  stepAmount: 0
+  lerpFactor: 2
   flashInterval: 0.5
 --- !u!1001 &257360443
 PrefabInstance:

@@ -15,6 +15,7 @@ namespace Grill_Thrills
 		[SerializeField] private int levelId;
 		[SerializeField] private LevelSO levelSO;
 		[SerializeField] private List<LevelSO> levels = new List<LevelSO>();
+		private float score;
 
 		[Header("Camera")]
 		public Camera mainCamera;
@@ -198,6 +199,8 @@ namespace Grill_Thrills
 			{
 				foodsToSpawn.Add(GetSlowFood());
 			}
+
+			foodsToSpawn.Shuffle();
 		}
 
 		private Food GetFastFood()
@@ -245,10 +248,12 @@ namespace Grill_Thrills
 			if (isIdeal)
 			{
 				ideallyCookedCount++;
+				// score += levelSO.idealCookScore;
 			}
 			else
 			{
 				correctCount++;
+				// score += levelSO.rawOvercookScore;
 			}
 			uiManager.UpdateCorrectText(correctCount + ideallyCookedCount);
 		}
@@ -266,7 +271,19 @@ namespace Grill_Thrills
 
 		public float GetScore()
 		{
-			return 0;
+			return Mathf.Clamp((ideallyCookedCount - wrongCount) * levelSO.idealCookScore + (levelSO.rawOvercookScore * correctCount), 0f, 1000f);
+		}
+
+		public void ChangeLevel(bool isUp)
+		{
+			if (isUp)
+				levelId++;
+
+			else
+				levelId--;
+
+			Mathf.Clamp(levelId, 0, levels.Count - 1);
+			PlayerPrefs.SetInt("Grill_Thrills_LevelID", levelId);
 		}
 
 		private void Reset()
@@ -280,6 +297,7 @@ namespace Grill_Thrills
 			ideallyCookedCount = 0;
 			correctCount = 0;
 			wrongCount = 0;
+			score = 0;
 		}
 
 		IEnumerator MoveCameraRoutine()
@@ -293,6 +311,22 @@ namespace Grill_Thrills
 			yield return new WaitForSeconds(1f);
 
 			GameStateManager.SetGameState(GameState.Playing);
+		}
+	}
+
+	public static class IListExtensions
+	{
+		public static void Shuffle<T>(this IList<T> ts)
+		{
+			var count = ts.Count;
+			var last = count - 1;
+			for (var i = 0; i < last; ++i)
+			{
+				var r = UnityEngine.Random.Range(i, count);
+				var tmp = ts[i];
+				ts[i] = ts[r];
+				ts[r] = tmp;
+			}
 		}
 	}
 }

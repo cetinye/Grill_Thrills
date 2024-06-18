@@ -19,7 +19,6 @@ namespace Grill_Thrills
 		[SerializeField] private Vector3 startPos;
 		[SerializeField] private Vector3 endPos;
 		[SerializeField] private float lerpFactor;
-		[SerializeField] private float score;
 		private Vector3 target;
 		private float stepAmount;
 
@@ -39,12 +38,14 @@ namespace Grill_Thrills
 		void Update()
 		{
 			// set target slider position
-			// target = LevelManager.instance.GetScore() * stepAmount;
-			target = new Vector3(startPos.x + (score * stepAmount), sliderRectTransform.localPosition.y, sliderRectTransform.localPosition.z);
+			target = new Vector3(startPos.x + (levelManager.GetScore() * stepAmount), sliderRectTransform.localPosition.y, sliderRectTransform.localPosition.z);
 
 			// prevent slider from going out of bounds
 			if (target.x > endPos.x)
+			{
 				target = endPos;
+				levelManager.ChangeLevel(true);
+			}
 
 			// lerp slider fill
 			sliderRectTransform.localPosition = Vector3.Lerp(sliderRectTransform.localPosition, target, Time.deltaTime * lerpFactor);
