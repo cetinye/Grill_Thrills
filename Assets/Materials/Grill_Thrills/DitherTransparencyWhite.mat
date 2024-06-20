@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DitherTransparency
+  m_Name: DitherTransparencyWhite
   m_Shader: {fileID: -6465566751694194690, guid: db94de17c4bfc684d889c868957b2340,
     type: 3}
   m_Parent: {fileID: 0}
@@ -42,12 +42,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DitherSize: 1
+    - _DitherSize: 0.26
     - _Opacity: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _AlbedoColor: {r: 0.24313726, g: 0.24313726, b: 0.24313726, a: 1}
+    - _AlbedoColor: {r: 0.62352943, g: 0.62352943, b: 0.62352943, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &590712863050846943

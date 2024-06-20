@@ -4,7 +4,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine.Audio;
 
-namespace Color_Clique
+namespace Grill_Thrills
 {
     public class AudioManager : MonoBehaviour
     {
