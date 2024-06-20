@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
+using Color_Clique;
 
 namespace Grill_Thrills
 {
@@ -117,6 +118,8 @@ namespace Grill_Thrills
 				isClickable = true;
 				ColorFoodSlider();
 				ColorFoodMaterials();
+
+				AudioManager.instance.PlayMeatOnGrill();
 			}
 		}
 
@@ -140,36 +143,44 @@ namespace Grill_Thrills
 			// Clicked on raw range
 			if (isOnGrill && (1 - 0.25f - rawCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) > slider.value)
 			{
-				ShowFeedback(correctSpr, 0.5f);
-				levelManager.Correct(false);
-				SpawnSpatula();
+				Correct(false);
 			}
 			// Clicked on ideally cooked range
 			else if (isOnGrill && (1 - 0.25f - ideallyCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f - overCookedSliderFillImg.fillAmount) > slider.value)
 			{
-				ShowFeedback(correctSpr, 0.5f);
-				levelManager.Correct(true);
-				SpawnSpatula();
+				Correct(true);
 			}
 			// Clicked on overcooked range
 			else if (isOnGrill && (1 - 0.25f - overCookedSliderFillImg.fillAmount) <= slider.value && (1 - 0.25f) > slider.value)
 			{
-				ShowFeedback(correctSpr, 0.5f);
-				levelManager.Correct(false);
-				SpawnSpatula();
+				Correct(false);
 			}
 			// Out of range
 			else
 			{
-				Wrong();
+				Wrong(false);
 			}
 
 			isOnGrill = false;
 			sliderColorTween.Kill();
 		}
 
-		private void Wrong()
+		private void Correct(bool isIdeallyCooked)
 		{
+			AudioManager.instance.PlayOneShot(SoundType.Correct);
+			ShowFeedback(correctSpr, 0.5f);
+			levelManager.Correct(isIdeallyCooked);
+			SpawnSpatula();
+		}
+
+		private void Wrong(bool isBurnt)
+		{
+			if (!isBurnt)
+				AudioManager.instance.PlayOneShot(SoundType.Wrong);
+
+			else
+				AudioManager.instance.PlayOneShot(SoundType.Burn);
+
 			ShowFeedback(wrongSpr, 0.5f);
 			levelManager.Wrong();
 			BurnFood();
@@ -204,7 +215,7 @@ namespace Grill_Thrills
 			{
 				isClickable = false;
 				isOnGrill = false;
-				Wrong();
+				Wrong(true);
 			}
 		}
 

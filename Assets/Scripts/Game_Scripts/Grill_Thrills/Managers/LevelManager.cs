@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Color_Clique;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -94,6 +95,9 @@ namespace Grill_Thrills
 
 		private void StartGame()
 		{
+			AudioManager.instance.Play(SoundType.Background);
+			AudioManager.instance.Play(SoundType.BackgroundGrill);
+
 			CategorizeFoods();
 			PrepareFoodsToSpawn();
 

@@ -3839,6 +3839,107 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &839697189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 839697190}
+  - component: {fileID: 839697191}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &839697190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839697189}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1674039991}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &839697191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839697189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f1c2f8c500d4f4a91479cdd79c8081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: 0
+    clip: {fileID: 8300000, guid: 38add410a52cd1441ba78e71230acc34, type: 3}
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: 1
+    clip: {fileID: 8300000, guid: 087fc4d1a3edad24987cca249d2af7a7, type: 3}
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: 5
+    clip: {fileID: 8300000, guid: d479e389a98188b47bcc2cefc7a3005a, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 6
+    clip: {fileID: 8300000, guid: e771f08a418e2794fa39b03a13da64da, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 7
+    clip: {fileID: 8300000, guid: 6ae7a749894916f4dbb050fdd093d7f5, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 2
+    clip: {fileID: 8300000, guid: df6460853cdfc234cbb9d66196071fac, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 3
+    clip: {fileID: 8300000, guid: 2619267028b99054ebbf5eb43a0231bf, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 4
+    clip: {fileID: 8300000, guid: 7889dc72d14c8e64f9558ab620576ea7, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  meatOnGrillSounds:
+  - name: 2
+    clip: {fileID: 8300000, guid: df6460853cdfc234cbb9d66196071fac, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 3
+    clip: {fileID: 8300000, guid: 2619267028b99054ebbf5eb43a0231bf, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 4
+    clip: {fileID: 8300000, guid: 7889dc72d14c8e64f9558ab620576ea7, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1001 &858839663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6495,6 +6596,7 @@ Transform:
   - {fileID: 474033154}
   - {fileID: 766562290}
   - {fileID: 196286188}
+  - {fileID: 839697190}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1725363660
