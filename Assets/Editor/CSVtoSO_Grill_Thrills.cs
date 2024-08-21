@@ -5,10 +5,10 @@ using System;
 
 namespace Grill_Thrills
 {
-    public class CSVtoSO
+    public class CSVtoSO_Grill_Thrills
     {
         //Check .csv path
-        private static string CSVPath = "/Editor/LevelCSV.csv";
+        private static string CSVPath = "/Editor/LevelCSV_Grill_Thrills.csv";
 
         [MenuItem("Tools/CSV_to_SO/Grill_Thrills/Generate")]
         public static void GenerateSO()
