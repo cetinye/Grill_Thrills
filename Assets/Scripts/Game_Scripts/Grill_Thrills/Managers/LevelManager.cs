@@ -77,6 +77,14 @@ namespace Grill_Thrills
 			ditherTransparencyMatWhite.SetFloat("_Opacity", 1f);
 		}
 
+		/// <summary>
+		/// This function is called when the MonoBehaviour will be destroyed.
+		/// </summary>
+		void OnDestroy()
+		{
+			GameStateManager.OnGameStateChanged -= OnGameStateChanged;
+		}
+
 		void Start()
 		{
 			StartGame();
@@ -276,7 +284,7 @@ namespace Grill_Thrills
 
 		public float GetScore()
 		{
-			return Mathf.Clamp((ideallyCookedCount - wrongCount) * levelSO.idealCookScore + (levelSO.rawOvercookScore * correctCount), 0f, 1000f);
+			return Mathf.Clamp(((ideallyCookedCount - wrongCount) * levelSO.idealCookScore) + (levelSO.rawOvercookScore * correctCount), 0f, 1000f);
 		}
 
 		public void ChangeLevel(bool isUp)

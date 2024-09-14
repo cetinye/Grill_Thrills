@@ -19,7 +19,7 @@ namespace Grill_Thrills
 		[SerializeField] private Vector3 startPos;
 		[SerializeField] private Vector3 endPos;
 		[SerializeField] private float lerpFactor;
-		private Vector3 target;
+		public Vector3 target;
 		private float stepAmount;
 
 		[Header("Flash Variables")]
