@@ -149,6 +149,7 @@ namespace Grill_Thrills
 			if (levelTimer <= 0f)
 			{
 				GameStateManager.SetGameState(GameState.TimesUp);
+				UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 			}
 
 			if (levelTimer <= 5.2f && isFlashable)
