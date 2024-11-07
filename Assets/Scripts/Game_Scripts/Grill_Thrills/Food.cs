@@ -10,6 +10,7 @@ namespace Grill_Thrills
 		private LevelManager levelManager;
 
 		[Header("Food Variables")]
+		[SerializeField] private float startCookingDelay;
 		[SerializeField] private FoodType foodType;
 		private float cookTime;
 		[SerializeField] private float idealCookTime;
@@ -106,20 +107,38 @@ namespace Grill_Thrills
 
 			AssignFoodVariables();
 			ArrangeCookSlider();
+
+			Invoke(nameof(StartCooking), startCookingDelay);
 		}
 
-		void OnCollisionEnter(Collision other)
+		void OnDestroy()
 		{
-			if (other.collider.Equals(levelManager.GetGrillCollider()))
-			{
-				timeOnGrill = 0f;
-				isOnGrill = true;
-				isClickable = true;
-				ColorFoodSlider();
-				ColorFoodMaterials();
+			CancelInvoke(nameof(StartCooking));
+		}
 
-				AudioManager.instance.PlayMeatOnGrill();
-			}
+		// void OnCollisionEnter(Collision other)
+		// {
+		// 	if (other.collider.Equals(levelManager.GetGrillCollider()))
+		// 	{
+		// 		timeOnGrill = 0f;
+		// 		isOnGrill = true;
+		// 		isClickable = true;
+		// 		ColorFoodSlider();
+		// 		ColorFoodMaterials();
+
+		// 		AudioManager.instance.PlayMeatOnGrill();
+		// 	}
+		// }
+
+		void StartCooking()
+		{
+			timeOnGrill = 0f;
+			isOnGrill = true;
+			isClickable = true;
+			ColorFoodSlider();
+			ColorFoodMaterials();
+
+			AudioManager.instance.PlayMeatOnGrill();
 		}
 
 		void Update()

@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce870228a624354a925d96bea72da7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startCookingDelay: 0.25
   foodType: 0
   idealCookTime: 3
   slider: {fileID: 2764916503092790097}
