@@ -38,13 +38,12 @@ namespace Grill_Thrills
 		void Update()
 		{
 			// set target slider position
-			target = new Vector3(startPos.x + (levelManager.GetScore() * stepAmount), sliderRectTransform.localPosition.y, sliderRectTransform.localPosition.z);
+			target = new Vector3(startPos.x + (levelManager.GetCorrectCount() * stepAmount), sliderRectTransform.localPosition.y, sliderRectTransform.localPosition.z);
 
 			// prevent slider from going out of bounds
 			if (target.x > endPos.x)
 			{
 				target = endPos;
-				levelManager.ChangeLevel(true);
 			}
 
 			// lerp slider fill
@@ -68,7 +67,7 @@ namespace Grill_Thrills
 
 		private void CalculateStepAmount()
 		{
-			stepAmount = (endPos.x - startPos.x) / levelManager.GetLevelSO().minScoreToPass;
+			stepAmount = (endPos.x - startPos.x) / levelManager.GetLevelSO().levelUpCriteria;
 		}
 
 		public void FlashRed()

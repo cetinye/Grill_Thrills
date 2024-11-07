@@ -19,8 +19,10 @@ namespace Grill_Thrills
 		public float slowCookRange;
 		public int numberOfMaxFoods;
 		public float spawnFrequency;
-		public int minScoreToPass;
-		public float idealCookScore;
-		public float rawOvercookScore;
+		public int levelUpCriteria;
+		public int levelDownCriteria;
+		public int idealCookScore;
+		public int rawOvercookScore;
+		public int penaltyPoint;
 	}
 }

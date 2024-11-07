@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d24a16c172b233e4abc3cc8c12b2ed5e, type: 3}
+  m_Name: GrillThrills_Level 17
+  m_EditorClassIdentifier: 
+  levelId: 17
+  fastIncluded: 1
+  mediumIncluded: 1
+  slowIncluded: 1
+  fastCookSpeed: 3
+  mediumCookSpeed: 4
+  slowCookSpeed: 5
+  fastSpawnRate: 60
+  mediumSpawnRate: 20
+  slowSpawnRate: 20
+  fastCookRange: 0.07
+  mediumCookRange: 0.06
+  slowCookRange: 0.06
+  numberOfMaxFoods: 9
+  spawnFrequency: 4
+  levelUpCriteria: 10
+  levelDownCriteria: 3
+  idealCookScore: 100
+  rawOvercookScore: 50
+  penaltyPoint: 25

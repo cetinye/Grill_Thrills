@@ -37,6 +37,8 @@ namespace Grill_Thrills
 		private List<Food> slowFoods = new List<Food>();
 		[SerializeField] private List<Food> foodsToSpawn = new List<Food>();
 		private int ideallyCookedCount = 0, correctCount = 0, wrongCount = 0;
+		public int totalIdeallyCookedCount = 0, totalCorrectCount = 0, totalWrongCount = 0;
+		private bool lockWrong1 = true, lockWrong2 = true;
 
 		[Header("Timer Variables")]
 		[SerializeField] private float levelTime;
@@ -97,9 +99,10 @@ namespace Grill_Thrills
 
 		private void AssignLevelVariables()
 		{
-			levelId = PlayerPrefs.GetInt("Grill_Thrills_LevelID", 0);
+			levelId = PlayerPrefs.GetInt("Grill_Thrills_LevelID", 1);
+			levelId = Mathf.Clamp(levelId, 1, levels.Count);
 
-			levelSO = levels[levelId];
+			levelSO = levels[levelId - 1];
 		}
 
 		private void StartGame()
@@ -149,7 +152,9 @@ namespace Grill_Thrills
 			if (levelTimer <= 0f)
 			{
 				GameStateManager.SetGameState(GameState.TimesUp);
-				UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+				Debug.Log("Score: " + CalculateScore());
+
+				// UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 			}
 
 			if (levelTimer <= 5.2f && isFlashable)
@@ -158,6 +163,14 @@ namespace Grill_Thrills
 				// GameManager.instance.PlayFx("Countdown", 0.7f, 1f);
 				uiManager.FlashRed();
 			}
+		}
+
+		public int CalculateScore()
+		{
+			float inGameScore = (totalIdeallyCookedCount * levelSO.idealCookScore) + (totalCorrectCount * levelSO.rawOvercookScore) - (totalWrongCount * levelSO.penaltyPoint);
+			float maxInGame = (totalCorrectCount + totalIdeallyCookedCount + totalWrongCount) * levelSO.idealCookScore;
+
+			return Mathf.Clamp(Mathf.RoundToInt(inGameScore / maxInGame * 1000f), 0, 1000);
 		}
 
 		private void SpawnFood()
@@ -262,20 +275,47 @@ namespace Grill_Thrills
 			if (isIdeal)
 			{
 				ideallyCookedCount++;
-				// score += levelSO.idealCookScore;
+				totalIdeallyCookedCount++;
 			}
 			else
 			{
 				correctCount++;
-				// score += levelSO.rawOvercookScore;
+				totalCorrectCount++;
 			}
 			uiManager.UpdateCorrectText(correctCount + ideallyCookedCount);
+			DecideLevel();
 		}
 
 		public void Wrong()
 		{
 			wrongCount++;
+			totalWrongCount++;
 			uiManager.UpdateWrongText(wrongCount);
+			DecideLevel();
+		}
+
+		private void DecideLevel()
+		{
+			if (wrongCount == 1 && lockWrong1)
+			{
+				lockWrong1 = false;
+				correctCount = 0;
+				ideallyCookedCount = 0;
+			}
+			else if (wrongCount == 2 && lockWrong2)
+			{
+				lockWrong2 = false;
+				correctCount = 0;
+				ideallyCookedCount = 0;
+				wrongCount = 0;
+
+				ChangeLevel(false);
+				return;
+			}
+			else if (correctCount + ideallyCookedCount >= levelSO.levelUpCriteria)
+			{
+				ChangeLevel(true);
+			}
 		}
 
 		public LevelSO GetLevelSO()
@@ -283,21 +323,34 @@ namespace Grill_Thrills
 			return levelSO;
 		}
 
-		public float GetScore()
+		public float GetCorrectCount()
 		{
-			return Mathf.Clamp(((ideallyCookedCount - wrongCount) * levelSO.idealCookScore) + (levelSO.rawOvercookScore * correctCount), 0f, 1000f);
+			return correctCount + ideallyCookedCount;
 		}
 
 		public void ChangeLevel(bool isUp)
 		{
+			Debug.LogFormat("Changing level {0} to {1}", levelId, isUp ? levelId + 1 : levelId - 1);
+
 			if (isUp)
 				levelId++;
 
 			else
 				levelId--;
 
-			Mathf.Clamp(levelId, 0, levels.Count - 1);
+			Debug.LogFormat("New level is {0}", levelId);
+
+			correctCount = 0;
+			wrongCount = 0;
+			ideallyCookedCount = 0;
+			lockWrong1 = true;
+			lockWrong2 = true;
+
 			PlayerPrefs.SetInt("Grill_Thrills_LevelID", levelId);
+
+			Debug.Log("Saved level in PlayerPrefs");
+
+			AssignLevelVariables();
 		}
 
 		private void Reset()
